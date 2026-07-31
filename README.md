@@ -67,9 +67,8 @@ The weather requests are handled through the local server so the frontend does n
 
 ## Submission information
 
-### GitHub repository
-- Repository: https://github.com/ishimwe1-collab/RhythmRoot
-
+### Web Application
+- Link: (http://127.0.0.1:5500)
 ### Demo video
 - Demo video link: https://youtu.be/AvuAZg79WJY
 
