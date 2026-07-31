@@ -6,7 +6,6 @@ RhythmRoot is a practical, browser-based habit planner and consistency tracker. 
 
 **Demo video:** Add the public video link before submission.
 
-**Presentation script:** See [VIDEO_SCRIPT.md](VIDEO_SCRIPT.md) for a short, presentation-ready script for your demo video.
 
 ## Features
 
