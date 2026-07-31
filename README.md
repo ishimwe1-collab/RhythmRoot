@@ -1,160 +1,81 @@
 # RhythmRoot
 
-RhythmRoot is a practical, browser-based habit planner and consistency tracker. It helps people create small routines, keep a daily record, see active streaks and weekly completion rates, and plan around upcoming public holidays.
+RhythmRoot is a browser-based habit planner that helps users build routines, track daily progress, and stay consistent over time. The app combines habit tracking with practical planning features such as public holiday awareness and weather-based suggestions.
 
-**Live site:** Add the load-balancer URL after deployment.
+## Overview
 
-**Demo video:** Add the public video link before submission.
+RhythmRoot is designed for people who want a simple, lightweight tool for staying organized without creating an account or relying on a database. All habit data is stored locally in the browser using `localStorage`, which keeps the app easy to use and deploy.
 
+## Key features
 
-## Features
+- Create and manage habits with categories, frequency, and notes
+- Mark habits as complete for any selected date
+- View streaks and weekly progress at a glance
+- Search, filter, and sort habits quickly
+- See upcoming public holidays for a selected country through the Nager.Date API
+- Receive weather-based habit suggestions for a chosen city
+- Handle loading and error states clearly for external services
+- Use a responsive layout that works well on desktop and mobile screens
 
-- Create habits with a category, frequency (daily or weekdays), and a personal reminder.
-- Mark habits completed for any selected day. The app calculates a current streak and this week's completion rate.
-- Search habits by name or category; filter by today’s status; sort by date, streak, or name.
-- Select a different date to review or update a past day.
-- Keep data private in the browser with `localStorage`; no account or database is needed.
-- Fetch and present the next public holidays for a chosen country using the Nager.Date API. This supports practical habit planning when a routine may change.
-- Show user-friendly loading, empty, validation, and external-API error states.
-- Responsive interface for desktop and mobile screens.
+## Technologies used
 
-## API credit and security
+- HTML, CSS, and JavaScript for the frontend
+- Node.js and Express for the local server
+- `dotenv` and `node-fetch` for environment handling and API requests
+- Nager.Date API for public holidays
+- A weather service for location-based suggestions
 
-RhythmRoot uses the [Nager.Date public holiday API](https://date.nager.at/), specifically its `PublicHolidays/{year}/{countryCode}` endpoint. The API is called by the browser using HTTPS. It is a public, no-key API, so RhythmRoot does not require, store, or expose any API keys or credentials.
+## Running locally
 
-The application creates UI content with DOM APIs and `textContent`, rather than inserting user-provided text as HTML. This reduces the risk of script injection from habit names and notes.
+### Prerequisites
 
-## Run locally
+- Node.js installed on your machine
 
-This is a static HTML, CSS, and JavaScript project—there are no package dependencies.
+### Setup
 
 1. Clone the repository:
    ```bash
    git clone https://github.com/ishimwe1-collab/RhythmRoot.git
    cd RhythmRoot
    ```
-2. Serve the files locally. For example, with Python 3:
+2. Install dependencies:
    ```bash
-   python3 -m http.server 8080
+   npm install
    ```
-3. Open [http://localhost:8080](http://localhost:8080) in a browser.
-
-> Opening `index.html` directly may work, but a local web server is recommended because the holiday API is fetched over the network.
-
-## Deploy to Web01 and Web02
-
-Replace the placeholder host names, usernames, paths, and domain/IP addresses below with the credentials supplied for the course. Do **not** put passwords or private SSH keys in this repository.
-
-### 1. Copy the site to both web servers
-
-From your local project folder, copy only the public site files to each web server:
-
-```bash
-scp index.html styles.css app.js YOUR_USER@3.95.16.158:/tmp/rhythmroot/
-scp index.html styles.css app.js YOUR_USER@54.145.252.181:/tmp/rhythmroot/
-```
-
-On **Web01**, then repeat exactly on **Web02**:
-
-```bash
-sudo mkdir -p /var/www/rhythmroot
-sudo cp /tmp/rhythmroot/index.html /tmp/rhythmroot/styles.css /tmp/rhythmroot/app.js /var/www/rhythmroot/
-sudo chown -R www-data:www-data /var/www/rhythmroot
-```
-
-If the servers use `nginx`, create `/etc/nginx/sites-available/rhythmroot` on each server:
-
-```nginx
-server {
-    listen 80;
-    server_name _;
-    root /var/www/rhythmroot;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-}
-```
-
-Enable and verify it on each web server:
-
-```bash
-sudo ln -s /etc/nginx/sites-available/rhythmroot /etc/nginx/sites-enabled/rhythmroot
-sudo nginx -t
-sudo systemctl reload nginx
-curl -I http://localhost
-```
-
-Then visit `http://WEB01_HOST` and `http://WEB02_HOST` separately. Both should load the same RhythmRoot page.
-
-### 2. Configure Lb01
-
-On **Lb01**, configure Nginx to forward traffic to both web servers. In `/etc/nginx/sites-available/rhythmroot-lb`, use the actual private or reachable IP addresses for Web01 and Web02:
-
-```nginx
-upstream rhythmroot_servers {
-    server WEB01_PRIVATE_IP:80;
-    server WEB02_PRIVATE_IP:80;
-}
-
-server {
-    listen 80;
-    server_name _;
-
-    location / {
-        proxy_pass http://rhythmroot_servers;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
-Enable it and reload Nginx:
-
-```bash
-sudo ln -s /etc/nginx/sites-available/rhythmroot-lb /etc/nginx/sites-enabled/rhythmroot-lb
-sudo nginx -t
-sudo systemctl reload nginx
-```
-
-### 3. Test the load balancer
-
-1. Open `http://LB01_HOST` in a browser and create/complete a sample habit.
-2. Reload several times and verify the page remains available.
-3. Optionally monitor Web01 and Web02 access logs while requesting the Lb01 URL:
+3. Start the app:
    ```bash
-   sudo tail -f /var/log/nginx/access.log
+   npm start
    ```
-   Requests should appear across both backend servers.
-4. Record the Lb01 URL in the **Live site** field at the top of this README.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Challenges and solutions
+## Project structure
 
-- **Keeping personal data without a backend:** RhythmRoot uses browser `localStorage`, so habits remain on the user’s device and the static app can be deployed safely on multiple servers.
-- **External-service reliability:** the holiday panel provides a useful loading message and a readable error if Nager.Date is unavailable; core habit tracking continues to work.
-- **Avoiding a single web-server failure:** deploying the identical static application to Web01 and Web02, then routing through Lb01, provides redundant delivery.
+- `index.html` — app layout and interface structure
+- `styles.css` — visual styling and responsive design
+- `app.js` — habit logic, UI updates, and API interactions
+- `server.js` — local server for weather-related requests
+- `tests/` — automated tests for the weather advice logic
 
-## Two-minute demo outline
+## API notes
 
-1. Open the app locally; add a habit, explain its category and reminder. (0:00–0:25)
-2. Complete it and point out the daily progress, streak, and weekly rate. (0:25–0:45)
-3. Demonstrate search/filter/sort and select another date. (0:45–1:10)
-4. Change the country or show the holiday planner, explaining the Nager.Date integration. (1:10–1:30)
-5. Open the Lb01 URL, explain that the same app runs on Web01 and Web02 behind the load balancer, and show it working. (1:30–2:00)
+RhythmRoot uses two external services to support planning:
 
-## Submission notes
+- Nager.Date for upcoming public holidays
+- A weather service for city-based habit suggestions
 
-To make your assignment submission clearer, include the following in your submission:
-- GitHub repository link
-- Live deployment URL once the load balancer is configured
-- Demo video link
-- A short explanation that the app uses a real external API and that API keys are not needed because the holiday service is public
+The weather requests are handled through the local server so the frontend does not need to expose sensitive credentials directly.
 
-## Repository contents
+## Submission information
 
-- `index.html` — accessible application structure.
-- `styles.css` — responsive visual design.
-- `app.js` — habit tracking, browser storage, interaction controls, validation, error handling, and API integration.
+### GitHub repository
+- Repository: https://github.com/ishimwe1-collab/RhythmRoot
+
+### Demo video
+- Demo video link: Add the public video link here before submission.
+
+### Access to Web01, Web02, and LB01
+The application was developed and tested locally, but deployment to the course servers could not be completed because access to Web01, Web02, and LB01 was unavailable. The server access required for deployment was not granted, so the app could not be published on those systems during the assignment period.
+
+## Notes
+
+The app is intentionally lightweight and does not require a database or user authentication. Its focus is on providing a practical, accessible planning experience in a single-page web application.
