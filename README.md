@@ -50,8 +50,8 @@ Replace the placeholder host names, usernames, paths, and domain/IP addresses be
 From your local project folder, copy only the public site files to each web server:
 
 ```bash
-scp index.html styles.css app.js YOUR_USER@WEB01_HOST:/tmp/rhythmroot/
-scp index.html styles.css app.js YOUR_USER@WEB02_HOST:/tmp/rhythmroot/
+scp index.html styles.css app.js YOUR_USER@3.95.16.158:/tmp/rhythmroot/
+scp index.html styles.css app.js YOUR_USER@54.145.252.181:/tmp/rhythmroot/
 ```
 
 On **Web01**, then repeat exactly on **Web02**:
