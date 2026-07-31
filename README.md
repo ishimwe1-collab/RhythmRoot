@@ -71,7 +71,7 @@ The weather requests are handled through the local server so the frontend does n
 - Repository: https://github.com/ishimwe1-collab/RhythmRoot
 
 ### Demo video
-- Demo video link: Add the public video link here before submission.
+- Demo video link: https://youtu.be/AvuAZg79WJY
 
 ### Access to Web01, Web02, and LB01
 The application was developed and tested locally, but deployment to the course servers could not be completed because access to Web01, Web02, and LB01 was unavailable. The server access required for deployment was not granted, so the app could not be published on those systems during the assignment period.
