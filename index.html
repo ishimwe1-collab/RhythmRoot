@@ -58,6 +58,22 @@
           <button id="open-habit-modal" class="primary-button" type="button">+ Add a habit</button>
         </div>
 
+        <div class="weather-card" aria-label="Weather advice">
+          <div class="weather-header">
+            <div>
+              <p class="eyebrow">WEATHER-INSPIRED PLANNING</p>
+              <h3>Today’s habit idea</h3>
+            </div>
+            <label class="weather-input">
+              <span class="sr-only">City</span>
+              <input id="weather-city" type="text" value="Kigali" placeholder="Enter city" />
+            </label>
+          </div>
+          <button id="weather-button" class="secondary-button" type="button">Check weather</button>
+          <p id="weather-status" class="api-status" role="status">Loading weather suggestion…</p>
+          <div id="weather-result" class="weather-result"></div>
+        </div>
+
         <div class="toolbar" aria-label="Habit controls">
           <label class="search-control"><span class="sr-only">Search habits</span><input id="search-input" type="search" placeholder="Search habits" /></label>
           <label><span class="sr-only">Filter habits</span><select id="filter-select"><option value="all">All habits</option><option value="completed">Completed today</option><option value="pending">Still to do</option></select></label>

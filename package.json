@@ -1,0 +1,14 @@
+{
+  "name": "rhythmroot",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.1",
+    "express": "^5.2.1",
+    "node-fetch": "^3.3.2"
+  }
+}

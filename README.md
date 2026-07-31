@@ -65,16 +65,24 @@ RhythmRoot uses two external services to support planning:
 
 The weather requests are handled through the local server so the frontend does not need to expose sensitive credentials directly.
 
-## Submission information
+## Two-minute demo outline
 
-### Web Application
-- Link: (http://127.0.0.1:5500)
-### Demo video
-- Demo video link: https://youtu.be/AvuAZg79WJY
+1. Open the app locally; add a habit, explain its category and reminder. (0:00–0:25)
+2. Complete it and point out the daily progress, streak, and weekly rate. (0:25–0:45)
+3. Demonstrate search/filter/sort and select another date. (0:45–1:10)
+4. Change the country or show the holiday planner, explaining the Nager.Date integration. (1:10–1:30)
+5. Open the Lb01 URL, explain that the same app runs on Web01 and Web02 behind the load balancer, and show it working. (1:30–2:00)
 
-### Access to Web01, Web02, and LB01
-The application was developed and tested locally, but deployment to the course servers could not be completed because access to Web01, Web02, and LB01 was unavailable. The server access required for deployment was not granted, so the app could not be published on those systems during the assignment period.
+## Submission notes
 
-## Notes
+To make your assignment submission clearer, include the following in your submission:
+- GitHub repository link
+- Live deployment URL once the load balancer is configured
+- Demo video link
+- A short explanation that the app uses a real external API and that API keys are not needed because the holiday service is public
 
-The app is intentionally lightweight and does not require a database or user authentication. Its focus is on providing a practical, accessible planning experience in a single-page web application.
+## Repository contents
+
+- `index.html` — accessible application structure.
+- `styles.css` — responsive visual design.
+- `app.js` — habit tracking, browser storage, interaction controls, validation, error handling, and API integration.

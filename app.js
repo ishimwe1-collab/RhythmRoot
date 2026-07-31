@@ -77,4 +77,26 @@ async function loadHolidays() {
 }
 function renderHolidays() { const list = $("#holiday-list"); list.replaceChildren(); const next = state.holidays[0]; $("#holiday-title").textContent = next ? next.name : "No more holidays this year"; $("#holiday-detail").textContent = next ? formatDate(next.date) : "Choose a country to refresh"; $("#api-status").textContent = state.holidays.length ? `Showing the next ${state.holidays.length} public holiday${state.holidays.length === 1 ? "" : "s"}.` : "No upcoming public holidays were returned for this year."; state.holidays.forEach((holiday) => { const item = document.createElement("div"); item.className = "holiday-item"; const name = document.createElement("strong"); name.textContent = holiday.name; const date = document.createElement("span"); date.textContent = formatDate(holiday.date); item.append(name, date); list.append(item); }); }
 
-$("#open-habit-modal").addEventListener("click", openModal); $("#empty-add-button").addEventListener("click", openModal); $("#close-modal").addEventListener("click", () => $("#habit-modal").close()); $("#cancel-modal").addEventListener("click", () => $("#habit-modal").close()); $("#habit-form").addEventListener("submit", addHabit); ["#search-input", "#filter-select", "#sort-select", "#view-date"].forEach((id) => $(id).addEventListener("input", render)); $("#refresh-holidays").addEventListener("click", loadHolidays); $("#country-select").value = localStorage.getItem(COUNTRY_KEY) || "RW"; render(); loadHolidays();
+async function loadWeather() {
+  const city = $("#weather-city").value.trim() || "Kigali";
+  const status = $("#weather-status");
+  const result = $("#weather-result");
+  status.textContent = "Checking weather suggestion…";
+  result.innerHTML = "";
+
+  try {
+    const response = await fetch(`/api/weather?city=${encodeURIComponent(city)}`);
+    if (!response.ok) throw new Error("Weather service unavailable");
+    const weather = await response.json();
+    result.innerHTML = `
+      <strong>${weather.city}</strong>
+      <p>${weather.temp} · ${weather.description}</p>
+      <p>${weather.advice}</p>
+    `;
+    status.textContent = "Weather-based habit advice is ready.";
+  } catch (error) {
+    status.textContent = `Could not load weather advice (${error.message}).`;
+  }
+}
+
+$("#open-habit-modal").addEventListener("click", openModal); $("#empty-add-button").addEventListener("click", openModal); $("#close-modal").addEventListener("click", () => $("#habit-modal").close()); $("#cancel-modal").addEventListener("click", () => $("#habit-modal").close()); $("#habit-form").addEventListener("submit", addHabit); ["#search-input", "#filter-select", "#sort-select", "#view-date"].forEach((id) => $(id).addEventListener("input", render)); $("#refresh-holidays").addEventListener("click", loadHolidays); $("#weather-button").addEventListener("click", loadWeather); $("#weather-city").addEventListener("keydown", (event) => { if (event.key === "Enter") { event.preventDefault(); loadWeather(); } }); $("#country-select").value = localStorage.getItem(COUNTRY_KEY) || "RW"; render(); loadHolidays(); loadWeather();
