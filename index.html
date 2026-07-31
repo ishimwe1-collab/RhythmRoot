@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="RhythmRoot is a practical habit-planning and consistency tracker." />
+    <title>RhythmRoot | Build routines that last</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="RhythmRoot home"><span class="brand-mark">R</span>RhythmRoot</a>
+      <p class="header-note">Small actions. Real momentum.</p>
+    </header>
+
+    <main id="top" class="page-shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">YOUR ROUTINE, MADE VISIBLE</p>
+          <h1 id="page-title">Grow your rhythm,<br /><em>one day at a time.</em></h1>
+          <p class="hero-copy">Plan habits around real life, see your consistency clearly, and keep the promises you make to yourself.</p>
+        </div>
+        <div class="today-card" aria-label="Today's progress">
+          <span id="today-date" class="today-date"></span>
+          <strong id="today-progress">0 / 0</strong>
+          <span>habits complete today</span>
+          <div class="progress-track"><div id="today-progress-bar" class="progress-fill"></div></div>
+        </div>
+      </section>
+
+      <section class="dashboard-grid" aria-label="Habit dashboard">
+        <article class="stat-card">
+          <span class="stat-label">This week's rhythm</span>
+          <strong id="week-rate" class="stat-value">0%</strong>
+          <span id="week-detail" class="stat-detail">Add a habit to begin</span>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Best current streak</span>
+          <strong id="best-streak" class="stat-value">0 days</strong>
+          <span id="best-streak-detail" class="stat-detail">Consistency starts today</span>
+        </article>
+        <article class="stat-card holiday-card">
+          <span class="stat-label">Plan around your calendar</span>
+          <strong id="holiday-title" class="holiday-title">Checking holidays…</strong>
+          <span id="holiday-detail" class="stat-detail">Using the public holiday service</span>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">HABIT LIBRARY</p>
+            <h2>Your commitments</h2>
+          </div>
+          <button id="open-habit-modal" class="primary-button" type="button">+ Add a habit</button>
+        </div>
+
+        <div class="toolbar" aria-label="Habit controls">
+          <label class="search-control"><span class="sr-only">Search habits</span><input id="search-input" type="search" placeholder="Search habits" /></label>
+          <label><span class="sr-only">Filter habits</span><select id="filter-select"><option value="all">All habits</option><option value="completed">Completed today</option><option value="pending">Still to do</option></select></label>
+          <label><span class="sr-only">Sort habits</span><select id="sort-select"><option value="created">Recently added</option><option value="streak">Longest streak</option><option value="name">Name A–Z</option></select></label>
+          <label class="date-control">For <input id="view-date" type="date" /></label>
+        </div>
+
+        <div id="habit-list" class="habit-list" aria-live="polite"></div>
+        <div id="empty-state" class="empty-state" hidden>
+          <div class="empty-icon">✦</div>
+          <h3>Give your first routine a home.</h3>
+          <p>Add a small, repeatable action—RhythmRoot will help you notice the progress.</p>
+          <button class="text-button" id="empty-add-button" type="button">Create your first habit</button>
+        </div>
+      </section>
+
+      <section class="holiday-section" aria-labelledby="holiday-heading">
+        <div>
+          <p class="eyebrow">EXTERNAL API INSIGHT</p>
+          <h2 id="holiday-heading">Plan gently around holidays</h2>
+          <p>Public holidays can interrupt a routine. Choose your country and use upcoming dates to plan a lighter day, not lose your momentum.</p>
+        </div>
+        <div class="holiday-controls">
+          <label for="country-select">Country</label>
+          <select id="country-select"><option value="RW">Rwanda</option><option value="US">United States</option><option value="GB">United Kingdom</option><option value="CA">Canada</option><option value="KE">Kenya</option><option value="UG">Uganda</option><option value="TZ">Tanzania</option><option value="ZA">South Africa</option></select>
+          <button id="refresh-holidays" class="secondary-button" type="button">Refresh dates</button>
+        </div>
+        <p id="api-status" class="api-status" role="status"></p>
+        <div id="holiday-list" class="holiday-list"></div>
+      </section>
+    </main>
+
+    <footer>Built for deliberate progress · Holiday data by <a href="https://date.nager.at/" target="_blank" rel="noreferrer">Nager.Date</a></footer>
+
+    <dialog id="habit-modal" aria-labelledby="modal-title">
+      <form id="habit-form" method="dialog">
+        <div class="modal-heading"><div><p class="eyebrow">NEW COMMITMENT</p><h2 id="modal-title">Plant a habit</h2></div><button class="close-button" id="close-modal" type="button" aria-label="Close">×</button></div>
+        <label>Habit name<input id="habit-name" name="name" type="text" maxlength="48" placeholder="e.g., Morning walk" required /></label>
+        <div class="form-row"><label>Category<select id="habit-category" name="category"><option>Wellbeing</option><option>Health</option><option>Learning</option><option>Work</option><option>Home</option><option>Mindfulness</option></select></label><label>Frequency<select id="habit-frequency" name="frequency"><option value="daily">Daily</option><option value="weekdays">Weekdays</option></select></label></div>
+        <label>Why does this matter? <span class="optional">optional</span><input id="habit-note" name="note" type="text" maxlength="100" placeholder="A small reminder for future you" /></label>
+        <p id="form-error" class="form-error" role="alert"></p>
+        <div class="form-actions"><button class="secondary-button" id="cancel-modal" type="button">Cancel</button><button class="primary-button" type="submit">Save habit</button></div>
+      </form>
+    </dialog>
+    <template id="habit-template"><article class="habit-card"><button class="check-button" type="button" aria-label="Mark habit complete"><span>✓</span></button><div class="habit-content"><div class="habit-topline"><span class="category-pill"></span><span class="frequency-label"></span></div><h3 class="habit-name"></h3><p class="habit-note"></p><p class="streak-label"></p></div><button class="delete-button" type="button" aria-label="Delete habit">Delete</button></article></template>
+    <script src="app.js"></script>
+  </body>
+</html>
