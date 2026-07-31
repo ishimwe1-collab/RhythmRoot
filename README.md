@@ -41,6 +41,7 @@ RhythmRoot is designed for people who want a simple, lightweight tool for stayin
 2. Install dependencies:
    ```bash
    npm install
+   npm install dotenv
    ```
 3. Start the app:
    ```bash
@@ -65,21 +66,13 @@ RhythmRoot uses two external services to support planning:
 
 The weather requests are handled through the local server so the frontend does not need to expose sensitive credentials directly.
 
-## Two-minute demo outline
+##Deployment Note
 
-1. Open the app locally; add a habit, explain its category and reminder. (0:00–0:25)
-2. Complete it and point out the daily progress, streak, and weekly rate. (0:25–0:45)
-3. Demonstrate search/filter/sort and select another date. (0:45–1:10)
-4. Change the country or show the holiday planner, explaining the Nager.Date integration. (1:10–1:30)
-5. Open the Lb01 URL, explain that the same app runs on Web01 and Web02 behind the load balancer, and show it working. (1:30–2:00)
+The application was fully developed and tested locally. I intended to deploy it to the assigned Web01, Web02, and Lb01 servers as required by the assignment. However, during previous server configuration tasks, I lost SSH access to the assigned servers and was unable to regain access before the submission deadline despite multiple troubleshooting attempts.
 
-## Submission notes
+## Links 
 
-To make your assignment submission clearer, include the following in your submission:
-- GitHub repository link
-- Live deployment URL once the load balancer is configured
-- Demo video link
-- A short explanation that the app uses a real external API and that API keys are not needed because the holiday service is public
+Demo Video: https://youtu.be/AvuAZg79WJY
 
 ## Repository contents
 
