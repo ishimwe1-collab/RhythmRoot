@@ -2,11 +2,9 @@
 
 RhythmRoot is a practical, browser-based habit planner and consistency tracker. It helps people create small routines, keep a daily record, see active streaks and weekly completion rates, and plan around upcoming public holidays.
 
-**Live site:** Add the load-balancer URL after deployment.
+**Live site:** (https://ishimwe1-collab.github.io/RhythmRoot/)
 
 **Demo video:** Add the public video link before submission.
-
-**Presentation script:** See [VIDEO_SCRIPT.md](VIDEO_SCRIPT.md) for a short, presentation-ready script for your demo video.
 
 ## Features
 
